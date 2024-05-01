@@ -24,3 +24,31 @@ Clone the repository to your local machine:
 ```bash
 git clone https://github.com/hotcard7/Image2pdf.git
 cd Image2pdf
+```
+Install the required packages:
+```bash
+pip install -r requirement.txt
+```
+### Running the Application
+Execute the following command to run the Django server:
+```bash
+python manage.py runserver
+```
+Navigate to `http://127.0.0.1:8000/` in your web browser to view the application.
+
+## Usage
+1. Access the web interface.
+2. Use the drag and drop area or file selector to upload your image.
+3. Click the "convert to PDF" button.
+4. Download the generated PDF file.
+
+## Contributing
+Contributions are welcome! Please feel free to submit pull requests or open issues to improve the functionality or fix problems with the application.
+
+## Screenshots
+![Image2pdf.png](https://github.com/hotcard7/Image2pdf/assets/128076838/69fd3f4e-24d0-4b2d-9a7d-220ecf136bae)
+
+## Contact
+For any additional information, contact `arabindam0401@gmail.com`.
+
+Thank you for using or contributing to Image to PDF Converter!
