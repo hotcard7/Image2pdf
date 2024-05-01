@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image to PDF Converter</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #drop-area {
+            width: 400px;
+            height: 200px;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 180px;
+            margin: 10px auto;
+            font-size: 16px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        #drop-area.hover {
+            background-color: lightblue;
+        }
+        img {
+            max-width: 100px;
+            max-height: 100px;
+            margin: 5px;
+            display: inline-block;
+        }
+        .hidden {
+            display: none;
+        }
+        #gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Convert Your Image to PDF</h1>
+    <form method="post" enctype="multipart/form-data" style="text-align: center;">
+        {% csrf_token %}
+        <div id="drop-area">
+            Drag and drop an image file here or click to select a file
+            <input type="file" name="image" class="hidden" id="fileElem" onchange="handleFiles(this.files)">
+        </div>
+        <div id="gallery"></div>
+        <button type="submit" class="btn btn-primary">Convert to PDF</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script>
+    function handleFiles(files) {
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = ''; // Clear the gallery
+        const file = files[0]; // Handle only the first file
+        if (file && file.type.startsWith('image/')) {
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.onload = function() {
+                URL.revokeObjectURL(this.src);
+            };
+            gallery.appendChild(img);
+        }
+    }
+
+    let dropArea = document.getElementById('drop-area');
+    let fileElem = document.getElementById('fileElem');
+
+    dropArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        dropArea.classList.add('hover');
+    });
+
+    dropArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        dropArea.classList.remove('hover');
+    });
+
+    dropArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        dropArea.classList.remove('hover');
+        let files = e.dataTransfer.files;
+        if (files.length) {
+            fileElem.files = files;
+            handleFiles(files);
+        }
+    });
+
+    dropArea.addEventListener('click', function() {
+        fileElem.click();
+    });
+</script>
+</body>
+</html>
